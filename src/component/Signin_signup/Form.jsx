@@ -2,10 +2,13 @@ import { Button } from '@/components/ui/button'
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from '@/components/ui/use-toast';
 
 export const Form = () => {
+	const navigate=useNavigate();
 	const [showPassword, setShowPassword]=useState(false);
+	const [error, setError]=useState(null);
 	const [signinData,setSignInData]=useState(
 		{
 			username:'',
@@ -38,9 +41,36 @@ export const Form = () => {
 		}));
 	}
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async(e) => {
 		e.preventDefault();
-		console.log("Form submitted", signinData);
+		try{
+			const response=await fetch('http://localhost/chatspace/backend/signup_signin/signin.php',{
+				method:'POST',
+				headers:{
+					'Content-Type':'application/json'
+				},
+				body: JSON.stringify(signinData)
+			})
+			const result=await response.json();
+			if(result.success==true){
+				setError(null);
+				navigate('/');
+				toast({
+					description: " You have successfully logged in!!"
+				})
+			}
+			else{
+				setError(result.message);
+			}
+		}
+		catch{
+			setError(null);
+			toast({
+				variant: "destructive",
+				title: "Uh oh! Something went wrong.",
+          		description: "There was a problem with your request.",
+			})
+		}
 	}
   return (
 	<>
@@ -72,6 +102,7 @@ export const Form = () => {
 						</div>
 					)
 				}
+				<span className='text-red-500'>{error}</span>
 				<p className='mb-3'>Don't have any account?
 					<span className='text-blue-700 underline'>
 						<Link to="/signup"> Sign Up!</Link>
