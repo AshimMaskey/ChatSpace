@@ -1,8 +1,10 @@
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const Search = () => {
+  console.log(useSelector(state=>state.auth))
   const [searchedValue, setSearchedValue]=useState('');
   const [error, setError]=useState(null);
   const handleChange=(e)=>{

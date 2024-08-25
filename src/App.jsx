@@ -4,22 +4,20 @@ import Profile from "./component/Profile/Profile.jsx"
 import Search from "./component/Search/Search.jsx"
 import { Form } from "./component/Signin_signup/Form.jsx"
 import { SignUpForm } from "./component/Signin_signup/SignUpForm.jsx"
-import { Button } from "./components/ui/button.jsx"
 import { Routes, Route, Link } from "react-router-dom"
+import PrivateRoute from "./component/PrivateRoute/PrivateRoute.jsx"
+import PrivateRoute1 from "./component/PrivateRoute/PrivateRoute1.jsx"
 
 function App() {
     return (
-    <>
-    {/* <Form/> */}
-    {/* <SignUpForm/> */}
-    
+    <>    
     <Routes>
-      <Route path="/" element={<UserLayout/>}>
+      <Route path="/" element={<PrivateRoute element={<UserLayout/>}/>}>
         <Route path="/search" element={<Search />}/>
         <Route path="/profile" element={<Profile />}/>
       </Route>
-        <Route path="/signin" element={<Form/>}/>
-        <Route path="/signup" element={<SignUpForm/>}/>
+      <Route path="/signin" element={<PrivateRoute1 element={<Form/>}/>}/>
+      <Route path="/signup" element={<PrivateRoute1 element={<SignUpForm/>}/>}/>
       <Route path="*" element={<NoPage/>}/>
     </Routes>
     </>

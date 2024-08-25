@@ -15,12 +15,13 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Hamburger } from './Hamburger'
-
-
+import { useDispatch } from 'react-redux'
+import { logout } from '@/features/auth/authSlice'
 
 export const Header = () => {
+  const dispatch=useDispatch(); 
   const handleClick=()=>{
-    console.log('clicked'); 
+   dispatch(logout());
   }
   
   return (

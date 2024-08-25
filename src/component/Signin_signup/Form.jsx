@@ -4,9 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from '@/components/ui/use-toast';
+import { useDispatch } from 'react-redux';
+import { login } from '@/features/auth/authSlice';
 
 export const Form = () => {
 	const navigate=useNavigate();
+	const dispatch=useDispatch();
 	const [showPassword, setShowPassword]=useState(false);
 	const [error, setError]=useState(null);
 	const [signinData,setSignInData]=useState(
@@ -53,8 +56,9 @@ export const Form = () => {
 			})
 			const result=await response.json();
 			if(result.success==true){
+				console.log(result);
 				setError(null);
-				navigate('/');
+				dispatch(login(result.user));
 				toast({
 					description: " You have successfully logged in!!"
 				})

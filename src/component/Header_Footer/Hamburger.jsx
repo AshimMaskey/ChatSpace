@@ -21,13 +21,17 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useDispatch } from 'react-redux';
+import { logout } from '@/features/auth/authSlice';
 
 export const Hamburger = () => {
+  const dispatch=useDispatch();
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
-    console.log('Logged out');
-    setOpen(false); // Close the dropdown menu on logout
+    dispatch(logout());
+    setOpen(false);
+
   };
 
   return (
