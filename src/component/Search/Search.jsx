@@ -1,26 +1,45 @@
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import SearchItem from './SearchItem';
 
 const Search = () => {
-  console.log(useSelector(state=>state.auth))
   const [searchedValue, setSearchedValue]=useState('');
+  const [searchResult,setSearchResult]=useState(null);
   const [error, setError]=useState(null);
   const handleChange=(e)=>{
     setSearchedValue(e.target.value);
   }
 
-  const handleSubmit=()=>{
+  const handleSubmit=async()=>{
     if(searchedValue.length<3 || searchedValue=='')
+    {
       setError(' Length of word should be more than two!');
+      setSearchResult(null);
+    }
     else
     {
-      setError(null);
-      console.log(searchedValue);
+      try{
+        const response=await fetch(`http://localhost/chatspace/backend/search_user/search_user.php?searchQuery=${searchedValue}`,{
+          method: 'GET'
+        });
+        const result=await response.json();
+        if(result.success===true){
+          setError(null);
+          setSearchResult(result.user);        
+        }
+        else{
+          setSearchResult(null);
+          setError(result.message);       
+        }
+      }
+      catch{
+        setSearchResult(null);
+        setError('There was problem with your request');
+      }
     }
   }
-
+  // console.log(searchResult);
   const handleKeyPress=(e)=>{
     if(e.key=='Enter')
     {
@@ -48,15 +67,16 @@ const Search = () => {
         />
       </div>
     </div>
-      <div className='flex justify-center mt-10'>
+    <div className='flex justify-center mt-5'>
         {
-          error && <div>
-            <span className='text-red-500 text-lg'>
+          error && <div className='mb-4'>
+            <span className='text-red-500 text-lg sm:text-xl'>
               {error}
             </span>
           </div>
         }
-      </div>
+    </div>
+    <SearchItem searchResult={searchResult}/>
     </>
   );
 }
