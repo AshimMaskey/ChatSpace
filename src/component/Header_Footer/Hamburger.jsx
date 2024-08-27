@@ -24,7 +24,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { logout } from '@/features/auth/authSlice';
 
-export const Hamburger = () => {
+export const Hamburger = ({user_id}) => {
   const dispatch=useDispatch();
   const [open, setOpen] = useState(false);
 
@@ -42,7 +42,7 @@ export const Hamburger = () => {
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Link to='/profile'>
+        <Link to={`/profile/${user_id}`}>
         <DropdownMenuItem>Profile</DropdownMenuItem>
         </Link>
         <Link to='/search'>        

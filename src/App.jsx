@@ -14,7 +14,7 @@ function App() {
     <Routes>
       <Route path="/" element={<PrivateRoute element={<UserLayout/>}/>}>
         <Route path="/search" element={<Search />}/>
-        <Route path="/profile" element={<Profile />}/>
+        <Route path="/profile/:user_id" element={<Profile />}/>
       </Route>
       <Route path="/signin" element={<PrivateRoute1 element={<Form/>}/>}/>
       <Route path="/signup" element={<PrivateRoute1 element={<SignUpForm/>}/>}/>

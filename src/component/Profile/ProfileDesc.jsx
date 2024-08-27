@@ -1,8 +1,7 @@
 import { Button } from '@/components/ui/button'
 import React from 'react'
 
-export const ProfileDesc = ({user}) => {
-	const isUser=false;
+export const ProfileDesc = ({user, isUser}) => {
 	const profileData=[
 		{
 			label:'Username',
@@ -27,7 +26,7 @@ export const ProfileDesc = ({user}) => {
 			</h1>)
 		}
 		{
-			isUser?(<Button className='w-full text-md'>Add Friend</Button>):null
+			!isUser?(<Button className='w-full text-md'>Add Friend</Button>):null
 		}
 	</div>
 	</div>

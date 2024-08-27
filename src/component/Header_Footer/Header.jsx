@@ -15,11 +15,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Hamburger } from './Hamburger'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '@/features/auth/authSlice'
 
 export const Header = () => {
   const dispatch=useDispatch(); 
+  const user=useSelector(state=>state.auth.user);
   const handleClick=()=>{
    dispatch(logout());
   }
@@ -41,7 +42,7 @@ export const Header = () => {
         </NavLink>
       </div>
       <div>
-      <NavLink to='/profile'>
+      <NavLink to={`/profile/${user.user_id}`}>
       <Avatar className='border-gray-300 border-2 '>
         <AvatarImage src="https://github.com/shadcn.png" />
         <AvatarFallback>PP</AvatarFallback>
@@ -69,7 +70,7 @@ export const Header = () => {
       </div>
     </div>
     <div className=' flex content-center sm:hidden'>
-    <Hamburger/>
+    <Hamburger user_id={user.user_id}/>
     </div>
   </div>
   </>
