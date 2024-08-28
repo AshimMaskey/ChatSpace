@@ -1,4 +1,4 @@
-import { faBars, faMagnifyingGlass, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faBell, faMagnifyingGlass, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
@@ -24,7 +24,12 @@ export const Header = () => {
   const handleClick=()=>{
    dispatch(logout());
   }
-  
+  const profileInitials=()=>{
+    const nameArray = user.username.split(' ');
+    const initials = nameArray[0][0] + nameArray[nameArray.length - 1][0];
+    return initials.toUpperCase();
+  }
+  const count=4;
   return (
 	<>
   <div className='bg-[#F5F5F5] shadow-md py-4 px-10 md:px-20 flex justify-between'>
@@ -35,6 +40,20 @@ export const Header = () => {
     </div>
     
     <div className='text-xl md:text-2xl gap-6 md:gap-10 hidden sm:flex'>
+        <div className="relative inline-block">
+          <NavLink className={({isActive})=>
+        `cursor-pointer hover:border-b-[3px] pt-1 pb-1 hover:border-black ${isActive?'border-b-[3px] border-black':''}`} to="/notification">
+          <FontAwesomeIcon icon={faBell} className="text-gray-800" />
+          {count > 0 && (
+            <span
+              className="absolute top-0 right-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-600 rounded-full"
+              style={{ transform: 'translate(50%, -50%)' }}
+            >
+              {count}
+            </span>
+          )}
+        </NavLink>
+      </div>
       <div>
         <NavLink className={({isActive})=>
         `cursor-pointer hover:border-b-[3px] pt-1 pb-1 hover:border-black ${isActive?'border-b-[3px] border-black':''}`} to="/search">
@@ -45,7 +64,7 @@ export const Header = () => {
       <NavLink to={`/profile/${user.user_id}`}>
       <Avatar className='border-gray-300 border-2 '>
         <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>PP</AvatarFallback>
+        <AvatarFallback>{profileInitials()}</AvatarFallback>
       </Avatar>
       </NavLink>
       </div>

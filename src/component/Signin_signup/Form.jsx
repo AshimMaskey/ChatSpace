@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux';
 import { login } from '@/features/auth/authSlice';
 
 export const Form = () => {
-	const navigate=useNavigate();
 	const dispatch=useDispatch();
 	const [showPassword, setShowPassword]=useState(false);
 	const [error, setError]=useState(null);

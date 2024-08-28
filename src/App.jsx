@@ -7,6 +7,7 @@ import { SignUpForm } from "./component/Signin_signup/SignUpForm.jsx"
 import { Routes, Route, Link } from "react-router-dom"
 import PrivateRoute from "./component/PrivateRoute/PrivateRoute.jsx"
 import PrivateRoute1 from "./component/PrivateRoute/PrivateRoute1.jsx"
+import Notification from "./component/Notification/Notification.jsx"
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
     <Routes>
       <Route path="/" element={<PrivateRoute element={<UserLayout/>}/>}>
         <Route path="/search" element={<Search />}/>
+        <Route path="/notification" element={<Notification />}/>
         <Route path="/profile/:user_id" element={<Profile />}/>
       </Route>
       <Route path="/signin" element={<PrivateRoute1 element={<Form/>}/>}/>
